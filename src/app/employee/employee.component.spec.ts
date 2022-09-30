@@ -2,6 +2,7 @@ import {async, TestBed} from '@angular/core/testing';
 import {Component} from '@angular/core';
 
 import {EmployeeComponent} from './employee.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({selector: 'app-mat-card', template: ''})
 class CardComponent {
@@ -36,6 +37,7 @@ describe('EmployeeComponent', () => {
         CardSubtitleComponent,
         CardContentComponent
       ],
+      imports: [ MatDialogModule ]
     }).compileComponents();
   }));
 
@@ -51,4 +53,40 @@ describe('EmployeeComponent', () => {
 
     expect(comp).toBeTruthy();
   }));
+
+  it('should get direct reports', () => {
+    const fixture = TestBed.createComponent(EmployeeComponent);
+    const comp = fixture.debugElement.componentInstance;
+
+    comp.employees = [
+      {
+        id: 1,
+        firstName: 'Brian',
+        lastName: 'McGee',
+        position: 'CEO',
+        directReports: [2, 3]
+      },
+      {
+        id: 2,
+        firstName: 'Homer',
+        lastName: 'Thompson',
+        position: 'Dev Manager',
+        directReports: [4]
+      },
+      {
+        id: 3,
+        firstName: 'Rock',
+        lastName: 'Strongo',
+        position: 'Lead Tester'
+      },
+      {
+        id: 4,
+        firstName: 'Max',
+        lastName: 'Power',
+        position: 'Junior Software Engineer'
+      }
+    ];
+
+    expect(comp.getDirectReports(1)).toEqual(3);
+  })
 });

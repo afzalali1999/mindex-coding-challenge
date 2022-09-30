@@ -29,4 +29,40 @@ export class EmployeeListComponent implements OnInit {
     console.error(e);
     return this.errorMessage = e.message || 'Unable to retrieve employees';
   }
+
+  public onDeleteEmployee(emp: Employee) {
+    this.employeeService.remove(emp).subscribe(
+      () => { 
+        // remove deleted employee from employees
+        let deletedEmployees: Employee[] = this.employees.filter(emp2 => emp2.id !== emp.id);
+
+        // remove deleted employee id from directReports of an employee
+        deletedEmployees = deletedEmployees.map(delEmp => {
+          if (delEmp.directReports !== undefined && delEmp.directReports.includes(emp.id)) {
+            delEmp.directReports = delEmp.directReports.filter(empId => empId !== emp.id);
+            return delEmp;
+          }
+
+          return delEmp;
+        })
+
+        this.employees = deletedEmployees;
+      },
+      error => console.log(`onDeleteEmployee Error: ${error}`)
+    );
+  }
+
+  public onEditEmployee(updatedEmp: Employee) {
+    this.employeeService.save(updatedEmp).subscribe(
+      () => {
+        this.employees = this.employees.map(emp => {
+          if (emp.id == updatedEmp.id) {
+            return updatedEmp;
+          }
+
+          return emp;
+        });
+      }
+    );
+  }
 }

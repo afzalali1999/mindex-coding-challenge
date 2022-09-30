@@ -1,3 +1,18 @@
 .page-title {
   text-align: center;
+  color: #0066ba;
+}
+
+.background {
+  background-color: #f7f9ff;
+}
+
+.container {
+  margin: 0 5rem;
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    margin: 0 1rem;
+  }
 }

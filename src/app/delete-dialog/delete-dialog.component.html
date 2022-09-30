@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>Delete Direct Report?</h2>
+<mat-dialog-content>
+  <p>Permanantly delete direct report <b>{{ data.firstName }} {{ data.lastName }}</b></p>
+  <p>This action cannot be undone</p>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-stroked-button color="basic" [mat-dialog-close]="true">OK</button>
+  <button mat-stroked-button color="basic" [mat-dialog-close]="false">CANCEL</button>
+</mat-dialog-actions>
